@@ -2,6 +2,7 @@ const express = require('express');
 const PORT = process.env.PORT || 3001
 const app = express();
 const jobRouters = require('./routers/jobs-routers');
+require('./models/tables');
 
 app.use(jobRouters);
 
