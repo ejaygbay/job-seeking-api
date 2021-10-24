@@ -18,6 +18,7 @@ const createJob = (req, res) => {
         if(result !== null){
             res_obj.code = 1;
             res_obj.msg = "Job Not Created";
+            res_obj.error_msg = result.message;
         }
 
         res.send(res_obj);

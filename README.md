@@ -21,6 +21,8 @@ Method: **POST** <br/>
 Body: Params (**title, description, end_date**)
 
 ***EXAMPLE:*** JavaScript
+
+Request
 ```
 fetch("https://localhost:3000/v1/jobs", {
     method: POST,
@@ -31,4 +33,18 @@ fetch("https://localhost:3000/v1/jobs", {
         end_date: "11/25/2021"
     }
 })
+```
+
+Response
+```
+{
+  "code": 0,
+  "msg": "Job Created"
+}
+```
+```
+{
+  "code": 1,
+  "msg": "Job Not Created"
+}
 ```
