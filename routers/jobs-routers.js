@@ -4,10 +4,10 @@ const jobControllers = require('../controllers/jobs-controller');
 
 routers.get('/', jobControllers.getAPIDocumentation);
 
-routers.post('/job', jobControllers.createJob);
+routers.post('/v1/jobs', jobControllers.createJob);
 
-routers.patch('/job', jobControllers.editJob);
+routers.patch('/v1/jobs', jobControllers.editJob);
 
-routers.delete('/job', jobControllers.deleteJob);
+routers.delete('/v1/jobs', jobControllers.deleteJob);
 
 module.exports = routers;
