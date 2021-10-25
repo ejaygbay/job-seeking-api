@@ -45,6 +45,7 @@ Response
 ```
 {
   "code": 1,
-  "msg": "Job Not Created"
+  "msg": "Job Not Created",
+  "error_msg": "Dynamic error message here"
 }
 ```

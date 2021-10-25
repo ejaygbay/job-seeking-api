@@ -1,5 +1,5 @@
 {
-    "name": "emansion-scraper",
+    "name": "job-seeking-api",
     "version": "1.0.0",
     "description": "",
     "main": "server.js",
@@ -9,14 +9,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ejaygbay/emansion-scraper.git"
+        "url": "git+https://github.com/ejaygbay/job-seeking-api.git"
     },
     "author": "Emmanuel Jaygbay",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/ejaygbay/emansion-scraper/issues"
+        "url": "https://github.com/ejaygbay/job-seeking-api/issues"
     },
-    "homepage": "https://github.com/ejaygbay/emansion-scraper#readme",
+    "homepage": "https://github.com/ejaygbay/job-seeking-api#readme",
     "dependencies": {
         "express": "^4.17.1",
         "sqlite3": "^5.0.2"
