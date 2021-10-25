@@ -5,6 +5,8 @@ const getAPIDocumentation = (req, res) => {
     res.send("API Documentation");
 }
 
+const getJobs = (req, res) => db.all(`SELECT * FROM jobs`, (err, data) => res.send(data))
+
 const createJob = (req, res) => {
     let title = req.body.title;
     let desctiption = req.body.description;
@@ -35,6 +37,7 @@ const deleteJob = (req, res) => {
 
 module.exports = {
     getAPIDocumentation,
+    getJobs,
     createJob,
     editJob,
     deleteJob
