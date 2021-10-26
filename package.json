@@ -1,15 +1,8 @@
 {
     "name": "job-seeking-api",
     "version": "1.0.0",
-    "description": "v1.0 | By: Emmanuel Jaygbay",
+    "description": "Provide a API for developers to use to build job seeking platforms",
     "main": "server.js",
-    "dependencies": {
-        "express": "^4.17.1",
-        "sqlite3": "^5.0.2"
-    },
-    "devDependencies": {
-        "nodemon": "^2.0.14"
-    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "nodemon server.js"
@@ -23,5 +16,12 @@
     "bugs": {
         "url": "https://github.com/ejaygbay/job-seeking-api/issues"
     },
-    "homepage": "https://github.com/ejaygbay/job-seeking-api#readme"
+    "homepage": "https://github.com/ejaygbay/job-seeking-api#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "sqlite3": "^5.0.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.14"
+    }
 }
