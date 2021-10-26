@@ -49,7 +49,14 @@ const editJob = (req, res) => {
 }
 
 const deleteJob = (req, res) => {
-    res.send("Delete Job");
+    let job_id = req.query.id;
+    db.run(`DELETE FROM jobs WHERE id = ?;`, job_id, (err) => {
+        if (!err) {
+            res.send({ status: 0, msg: 'Job deleted' });
+        } else {
+            res.send({ status: 1, msg: 'Job not deleted' });
+        }
+    });
 }
 
 const checkLength = (text) => text.length;
