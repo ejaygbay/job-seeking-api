@@ -9,15 +9,15 @@ const getJobs = (req, res) => db.all(`SELECT * FROM jobs`, (err, data) => res.se
 
 const createJob = (req, res) => {
     let title = req.body.title;
-    let desctiption = req.body.description;
+    let description = req.body.description;
     let end_date = req.body.end_date;
 
-    db.run(`INSERT INTO jobs("title", "descriptions", "end_date", "date_created") VALUES(?,?,?, datetime('now'));`, title, desctiption, end_date, (result) => {
+    db.run(`INSERT INTO jobs("title", "descriptions", "end_date", "date_created") VALUES(?,?,?, datetime('now'));`, title, description, end_date, (result) => {
         let res_obj = {
             code: 0,
             msg: "Job Created"
         }
-        if(result !== null){
+        if (result !== null) {
             res_obj.code = 1;
             res_obj.msg = "Job Not Created";
             res_obj.error_msg = result.message;
@@ -28,12 +28,31 @@ const createJob = (req, res) => {
 }
 
 const editJob = (req, res) => {
-    res.send("Edit Job");
+    let job_id = req.id;
+    let title = req.body.title.trim();
+    let description = req.body.description.trim();
+    let end_date = req.body.end_date.trim();
+
+    console.log(title)
+
+    // if (checkLength(title) > 0 && checkLength(description) > 0 && checkLength(end_date) > 0) {
+    db.run(`UPDATE jobs SET title = ? WHERE id = ?;`, title, job_id, (err) => {
+        if (!err) {
+            console.log(err);
+            res.send({ status: 0, msg: 'Job updated' });
+        } else {
+            console.log(err);
+            res.send({ status: 1, msg: 'Job not updated' });
+        }
+    });
+    // }
 }
 
 const deleteJob = (req, res) => {
     res.send("Delete Job");
 }
+
+const checkLength = (text) => text.length;
 
 module.exports = {
     getAPIDocumentation,

@@ -49,3 +49,39 @@ Response
   "error_msg": "Dynamic error message here"
 }
 ```
+
+<br/>
+
+**EDIT JOB**
+
+Endpoint: **/v1/jobs** <br/>
+Method: **POST** <br/>
+Body: Params (**title [optional], description [optional], end_date [optional]**)
+
+***EXAMPLE:*** JavaScript
+
+Request
+```
+fetch("https://localhost:3000/v1/jobs", {
+    method: PATCH,
+    body: {
+		id: 1,
+        title: "Vacancy For Senior Software Developer"
+    }
+})
+```
+
+Response
+```
+{
+  "code": 0,
+  "msg": "Job Edited"
+}
+```
+```
+{
+  "code": 1,
+  "msg": "Job Not Edited",
+  "error_msg": "Dynamic error message here"
+}
+```
