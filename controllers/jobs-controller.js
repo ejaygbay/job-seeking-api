@@ -41,6 +41,14 @@ const editJob = (req, res) => {
                 res.send({ status: 1, msg: 'Job not updated' });
             }
         });
+    } else {
+        db.run(`UPDATE jobs SET title = ? WHERE id = ?;`, title, job_id, (err) => {
+            if (!err) {
+                res.send({ status: 0, msg: 'Job title updated' });
+            } else {
+                res.send({ status: 1, msg: 'Job title not updated' });
+            }
+        });
     }
 }
 
