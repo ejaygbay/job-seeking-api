@@ -3,9 +3,6 @@ let db = new sqlite3.Database('./jobsDB.db');
 const { v4: uuidv4 } = require('uuid');
 const Job = require('../models/tables');
 
-// console.log(uuidv4());
-// console.log(Jobs());
-
 const getAPIDocumentation = (req, res) => {
     res.send("API Documentation");
 }
@@ -18,18 +15,22 @@ const createJob = async(req, res) => {
     let end_date = req.body.end_date;
     let res_obj = {
         code: 0,
-        msg: "Job Entered"
+        msg: "Job entered"
     }
 
-    await Job.create({
-            id: uuidv4(),
-            title: title,
-            description: description,
-            end_date: end_date
-        }).then(suc => res.send(res_obj))
+    await Job
+        .findOrCreate({ where: { title: title, description: description, end_date: end_date } })
+        .then(suc => {
+            if (!suc[1]) {
+                res_obj.code = 1;
+                res_obj.msg = "Job already exist";
+            }
+
+            res.send(res_obj)
+        })
         .catch(err => {
             res_obj.code = 1;
-            res_obj.msg = "Job Not Entered";
+            res_obj.msg = "Job not entered";
             res_obj.error_msg = result.message;
             res.send(res_obj);
         })
@@ -71,6 +72,10 @@ const deleteJob = (req, res) => {
     });
 }
 
+const dontSleep = (req, res) => {
+    res.send("I'm awake!!!")
+}
+
 const checkLength = (text) => text.length;
 
 module.exports = {
@@ -78,5 +83,6 @@ module.exports = {
     getJobs,
     createJob,
     editJob,
-    deleteJob
+    deleteJob,
+    dontSleep
 }

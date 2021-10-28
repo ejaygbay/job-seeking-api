@@ -12,4 +12,6 @@ routers.patch('/v1/jobs', jobControllers.editJob);
 
 routers.delete('/v1/jobs', jobControllers.deleteJob);
 
+routers.get('/stay/up', jobControllers.dontSleep);
+
 module.exports = routers;
