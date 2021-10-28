@@ -1,7 +1,7 @@
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./jobsDB.db');
 const { v4: uuidv4 } = require('uuid');
-const Jobs = require('../models/tables');
+const Job = require('../models/tables');
 
 // console.log(uuidv4());
 // console.log(Jobs());
@@ -12,24 +12,27 @@ const getAPIDocumentation = (req, res) => {
 
 const getJobs = (req, res) => db.all(`SELECT * FROM jobs`, (err, data) => res.send(data))
 
-const createJob = (req, res) => {
+const createJob = async(req, res) => {
     let title = req.body.title;
     let description = req.body.description;
     let end_date = req.body.end_date;
+    let res_obj = {
+        code: 0,
+        msg: "Job Entered"
+    }
 
-    db.run(`INSERT INTO jobs("title", "descriptions", "end_date", "date_created") VALUES(?,?,?, datetime('now'));`, title, description, end_date, (result) => {
-        let res_obj = {
-            code: 0,
-            msg: "Job Created"
-        }
-        if (result !== null) {
+    await Job.create({
+            id: uuidv4(),
+            title: title,
+            description: description,
+            end_date: end_date
+        }).then(suc => res.send(res_obj))
+        .catch(err => {
             res_obj.code = 1;
-            res_obj.msg = "Job Not Created";
+            res_obj.msg = "Job Not Entered";
             res_obj.error_msg = result.message;
-        }
-
-        res.send(res_obj);
-    })
+            res.send(res_obj);
+        })
 }
 
 const editJob = (req, res) => {

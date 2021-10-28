@@ -19,7 +19,7 @@ const JOBS = sequelize.define('jobs', {
         type: DataTypes.STRING,
         allowNull: true
     },
-    endDate: {
+    end_date: {
         type: DataTypes.DATE
     }
 }, {

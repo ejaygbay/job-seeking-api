@@ -8,9 +8,9 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 app.use(jobRouters);
-sequelize.sync({
-    alter: true,
-    // force: true
-}).then(suc => console.log("SUCCESS=====", suc)).catch(err => console.log("ERROR+++++", err))
+// sequelize.sync({
+//     // alter: true,
+//     force: true
+// }).then(suc => console.log("SUCCESS=====", suc)).catch(err => console.log("ERROR+++++", err))
 
 app.listen(PORT, () => console.log(`App is listening on port ${PORT}`))
