@@ -1,5 +1,10 @@
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./jobsDB.db');
+const { v4: uuidv4 } = require('uuid');
+const Jobs = require('../models/tables');
+
+// console.log(uuidv4());
+// console.log(Jobs());
 
 const getAPIDocumentation = (req, res) => {
     res.send("API Documentation");

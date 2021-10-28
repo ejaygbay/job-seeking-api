@@ -1,8 +1,29 @@
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./jobsDB.db');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './jobsDB.db'
+});
 
-/** JOBS TABLE */
-db.run(`CREATE TABLE IF NOT EXISTS jobs(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, title VARCHAR(30) NOT NULL, descriptions VARCHAR(30), end_date DATETIME, date_created DATETIME);
-    `, (err, result) => {
-    !err ? console.log("Jobs table created.") : console.log("Jobs table not created.")
-})
+const JOBS = sequelize.define('jobs', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    title: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    endDate: {
+        type: DataTypes.DATE
+    }
+}, {
+    underscored: true
+});
+
+module.exports = JOBS;
