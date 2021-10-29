@@ -35,6 +35,7 @@ const getJobs = async(req, res) => {
     } else {
         res_obj.code = 401;
         res_obj.msg = "Sorry! Unauthorized step taken";
+        res.send(res_obj);
     }
 }
 
@@ -108,6 +109,8 @@ const deleteJob = async(req, res) => {
         res_obj.code = 401;
         res_obj.msg = "Sorry! Unauthorized step taken";
     }
+
+    res.send(res_obj);
 }
 
 const dontSleep = (req, res) => {
