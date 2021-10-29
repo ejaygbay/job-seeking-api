@@ -7,7 +7,7 @@ const sequelize = require('./models/tables');
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
-app.use(jobRouters);
+// app.use(jobRouters);
 // sequelize.sync({
 //     // alter: true,
 //     force: true

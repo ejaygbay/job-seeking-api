@@ -15,12 +15,12 @@ const JOBS = sequelize.define('jobs', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    description: {
+    job_link: {
         type: DataTypes.STRING,
         allowNull: true
     },
     end_date: {
-        type: DataTypes.DATE
+        type: DataTypes.STRING
     }
 }, {
     underscored: true
