@@ -2,15 +2,21 @@ let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./jobsDB.db');
 const { v4: uuidv4 } = require('uuid');
 const Job = require('../models/tables');
+require('dotenv').config();
 let api_key = process.env.api_key;
 
 const auth = (data) => {
     let obj_keys = Object.keys(data);
+
     if (obj_keys.includes('api_key')) {
         let auth_key = data.api_key;
-        auth_key === api_key ? true : false
-    }
-    return false;
+
+        if (auth_key === api_key)
+            return true;
+        else
+            false;
+    } else
+        return false;
 }
 
 const getAPIDocumentation = (req, res) => {
@@ -20,34 +26,36 @@ const getAPIDocumentation = (req, res) => {
 const getJobs = (req, res) => db.all(`SELECT * FROM jobs`, (err, data) => res.send(data))
 
 const createJob = async(req, res) => {
-    let auth = auth(req.body);
-    console.log(auth);
-
-    let title = req.body.title;
-    let job_link = req.body.job_link;
-    let end_date = req.body.end_date;
+    let auth_result = await auth(req.query);
     let res_obj = {
         code: 0,
         msg: "Job entered"
     }
 
-    // await Job
-    //     .findOrCreate({ where: { title: title, job_link: job_link, end_date: end_date } })
-    //     .then(suc => {
-    //         if (!suc[1]) {
-    //             res_obj.code = 1;
-    //             res_obj.msg = "Job already exist";
-    //         }
+    if (auth_result) {
+        let title = req.body.title;
+        let job_link = req.body.job_link;
+        let end_date = req.body.end_date;
 
-    //         res.send(res_obj)
-    //     })
-    //     .catch(err => {
-    //         res_obj.code = 1;
-    //         res_obj.msg = "Job not entered";
-    //         res_obj.error_msg = err.message;
-    //         console.log("Error@@@@@@@@@@@@", err)
-    //         res.send(res_obj);
-    //     })
+        await Job
+            .findOrCreate({ where: { title: title, job_link: job_link, end_date: end_date } })
+            .then(suc => {
+                if (!suc[1]) {
+                    res_obj.code = 1;
+                    res_obj.msg = "Job already exist";
+                }
+            })
+            .catch(err => {
+                res_obj.code = 1;
+                res_obj.msg = "Job not entered";
+                res_obj.error_msg = err.message;
+            })
+    } else {
+        res_obj.code = 401;
+        res_obj.msg = "Sorry! Unauthorized step taken";
+    }
+
+    res.send(res_obj);
 }
 
 const editJob = (req, res) => {
