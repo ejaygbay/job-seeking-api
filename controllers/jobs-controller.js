@@ -4,6 +4,10 @@ const { v4: uuidv4 } = require('uuid');
 const Job = require('../models/tables');
 require('dotenv').config();
 let api_key = process.env.api_key;
+let res_obj = {
+    code: 0,
+    msg: "Job entered"
+}
 
 const auth = (data) => {
     let obj_keys = Object.keys(data);
@@ -23,14 +27,19 @@ const getAPIDocumentation = (req, res) => {
     res.send("API Documentation");
 }
 
-const getJobs = (req, res) => db.all(`SELECT * FROM jobs`, (err, data) => res.send(data))
+const getJobs = async(req, res) => {
+    let auth_result = await auth(req.query);
+
+    if (auth_result) {
+        db.all(`SELECT * FROM jobs`, (err, data) => res.send(data))
+    } else {
+        res_obj.code = 401;
+        res_obj.msg = "Sorry! Unauthorized step taken";
+    }
+}
 
 const createJob = async(req, res) => {
     let auth_result = await auth(req.query);
-    let res_obj = {
-        code: 0,
-        msg: "Job entered"
-    }
 
     if (auth_result) {
         let title = req.body.title;
@@ -83,15 +92,22 @@ const editJob = (req, res) => {
     }
 }
 
-const deleteJob = (req, res) => {
-    let job_id = req.query.id;
-    db.run(`DELETE FROM jobs WHERE id = ?;`, job_id, (err) => {
-        if (!err) {
-            res.send({ status: 0, msg: 'Job deleted' });
-        } else {
-            res.send({ status: 1, msg: 'Job not deleted' });
-        }
-    });
+const deleteJob = async(req, res) => {
+    let auth_result = await auth(req.query);
+
+    if (auth_result) {
+        let job_id = req.query.id;
+        db.run(`DELETE FROM jobs WHERE id = ?;`, job_id, (err) => {
+            if (!err) {
+                res.send({ status: 0, msg: 'Job deleted' });
+            } else {
+                res.send({ status: 1, msg: 'Job not deleted' });
+            }
+        });
+    } else {
+        res_obj.code = 401;
+        res_obj.msg = "Sorry! Unauthorized step taken";
+    }
 }
 
 const dontSleep = (req, res) => {
