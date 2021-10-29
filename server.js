@@ -9,6 +9,7 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 app.use(jobRouters);
 
 
+// Reset DB
 // sequelize.sync({
 //     // alter: true,
 //     force: true
