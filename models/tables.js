@@ -20,7 +20,7 @@ const JOBS = sequelize.define('jobs', {
         allowNull: true
     },
     end_date: {
-        type: DataTypes.STRING,
+        type: DataTypes.DATEONLY,
         allowNull: true
     },
     status: {
