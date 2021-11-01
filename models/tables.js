@@ -21,6 +21,10 @@ const JOBS = sequelize.define('jobs', {
     },
     end_date: {
         type: DataTypes.STRING
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: 'active'
     }
 }, {
     underscored: true

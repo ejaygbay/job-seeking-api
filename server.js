@@ -10,9 +10,9 @@ app.use(jobRouters);
 
 
 // Reset DB
-// sequelize.sync({
-//     // alter: true,
-//     force: true
-// }).then(suc => console.log("SUCCESS=====", suc)).catch(err => console.log("ERROR+++++", err))
+sequelize.sync({
+    // alter: true,
+    force: true
+}).then(suc => console.log("SUCCESS=====", suc)).catch(err => console.log("ERROR+++++", err))
 
 app.listen(PORT, () => console.log(`App is listening on port ${PORT}`))
